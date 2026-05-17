@@ -40,3 +40,16 @@ app.get("/check", (req, res) => {
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
+
+app.get("/", (req, res) => {
+  res.redirect("https://bloomersoundtracker.github.io");
+});
+
+
+app.get("/test", (req, res) => {
+  res.json({
+    status: "online",
+    app: "Bloomer Sound Tracker Backend",
+    time: new Date().toISOString()
+  });
+});
