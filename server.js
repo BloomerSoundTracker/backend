@@ -6,50 +6,32 @@ app.use(cors());
 
 const PORT = process.env.PORT || 3000;
 
-// Fake tracked data (we'll replace later)
-const artists = [
-  "Bloomer",
-  "Nimbus Garden",
-  "SageFNTM",
-  "Phantom Sage",
-  "Until Ruins"
-];
+console.log("BOOTING bloomer-sound-tracker");
 
-// Simulated "latest tracks"
-let latest = {
-  Bloomer: "Unknown Bloom",
-  "Nimbus Garden": "Mist Cycle",
-  "SageFNTM": "Signal Fade",
-  "Phantom Sage": "Echo Drift",
-  "Until Ruins": "Final Light"
-};
-
-// GET latest tracks
-app.get("/latest", (req, res) => {
-  res.json(latest);
-});
-
-// Simulated check endpoint (we upgrade later)
-app.get("/check", (req, res) => {
-  res.json({
-    message: "Tracker running",
-    artists: artists.length
-  });
-});
-
-app.listen(PORT, () => {
-  console.log("Server running on port", PORT);
-});
-
+// ✅ homepage redirect
 app.get("/", (req, res) => {
   res.redirect("https://bloomersoundtracker.github.io");
 });
 
-
+// ✅ health check
 app.get("/test", (req, res) => {
   res.json({
     status: "online",
-    app: "Bloomer Sound Tracker Backend",
+    service: "bloomer-sound-tracker",
     time: new Date().toISOString()
   });
+});
+
+// ✅ test data
+app.get("/latest", (req, res) => {
+  res.json({
+    Bloomer: "Unknown Bloom",
+    "Phantom Sage": "Echo Drift",
+    "Nimbus Garden": "Mist Cycle"
+  });
+});
+
+// ⚠️ MUST be last
+app.listen(PORT, () => {
+  console.log("Listening on port", PORT);
 });
